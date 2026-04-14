@@ -6,54 +6,35 @@
     <title>منصة رصد الدرجات الشاملة</title>
     <style>
         :root {
-            --bg-color: #f4f7f6;
-            --text-color: #2c3e50;
-            --card-bg: #ffffff;
-            --border-color: #ddd;
-            --input-bg: #fff;
-            --primary-color: #3498db;
-            --success-color: #27ae60;
-            --warning-color: #e67e22;
+            --bg-color: #f4f7f6; --text-color: #2c3e50; --card-bg: #ffffff;
+            --border-color: #ddd; --input-bg: #fff; --primary-color: #3498db;
+            --success-color: #27ae60; --warning-color: #e67e22; --purple-color: #8e44ad;
         }
 
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: var(--bg-color); 
-            color: var(--text-color);
-            padding: 20px; 
-            margin: 0;
-        }
-
-        .container { 
-            max-width: 1100px; 
-            margin: auto; 
-            background: var(--card-bg); 
-            padding: 25px; 
-            border-radius: 10px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-        }
-
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 20px; margin: 0; }
+        .container { max-width: 1100px; margin: auto; background: var(--card-bg); padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         h2 { text-align: center; color: var(--text-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; }
         
-        .controls { 
-            display: flex; gap: 15px; margin-bottom: 25px; justify-content: center; flex-wrap: wrap; 
-            background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);
-        }
-        
+        .controls { display: flex; gap: 15px; margin-bottom: 25px; justify-content: center; flex-wrap: wrap; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
         select, button { padding: 12px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 16px; font-family: inherit;}
         select { background-color: var(--input-bg); min-width: 150px; cursor: pointer; }
         
         button { font-weight: bold; cursor: pointer; transition: 0.3s; color: white; border: none; }
         .btn-fetch { background-color: var(--primary-color); }
         .btn-fetch:hover { background-color: #2980b9; }
-        
-        .btn-add { background-color: var(--success-color); margin-bottom: 15px; display: inline-block; }
+        .btn-add { background-color: var(--success-color); display: inline-block; }
         .btn-add:hover { background-color: #2ecc71; }
-        
+        .btn-bulk { background-color: var(--purple-color); }
+        .btn-bulk:hover { background-color: #9b59b6; }
         .btn-save { background-color: var(--warning-color); padding: 15px 40px; font-size: 18px; width: 100%; max-width: 400px;}
         .btn-save:hover { background-color: #d35400; }
         .btn-save:disabled { background-color: #95a5a6; cursor: not-allowed; }
 
+        .bulk-add-container { background: #fdfefe; padding: 15px; border-radius: 8px; border: 2px dashed #bdc3c7; margin-bottom: 20px; }
+        .bulk-add-container h4 { margin-top: 0; color: var(--purple-color); margin-bottom: 10px; }
+        textarea { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #bdc3c7; margin-bottom: 10px; font-family: inherit; font-size: 15px; resize: vertical; box-sizing: border-box; }
+        .action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        
         .table-responsive { overflow-x: auto; margin-bottom: 30px; border-radius: 8px; border: 1px solid var(--border-color); }
         table { width: 100%; border-collapse: collapse; white-space: nowrap; }
         th, td { border: 1px solid var(--border-color); padding: 12px 8px; text-align: center; }
@@ -62,17 +43,16 @@
         input[type="text"] { width: 220px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 14px; }
         input[type="number"] { width: 55px; padding: 8px 4px; text-align: center; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; font-family: inherit;}
         input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        
         .row-number { font-weight: bold; color: #7f8c8d; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>منصة رصد الدرجات الإلكترونية</h2>
+    <h2>منصة رصد الدرجات الإلكترونية الموحدة</h2>
     
     <div class="controls">
-        <select id="grade" onchange="updateTableHeaders()">
+        <select id="grade" onchange="clearTable()">
             <option value="8">الصف الثامن</option>
             <option value="10">الصف العاشر</option>
         </select>
@@ -84,15 +64,34 @@
             <option value="5">شعبة 5</option>
             <option value="6">شعبة 6</option>
         </select>
-        <button class="btn-fetch" onclick="fetchExistingStudents(this)">🔄 جلب أسماء ودرجات الطلاب</button>
+        <button class="btn-fetch" onclick="fetchExistingStudents(this)">🔄 جلب الأسماء والدرجات المسجلة</button>
     </div>
 
-    <button class="btn-add" onclick="addNewRow()">+ إضافة طالب جديد للجدول</button>
+    <div class="bulk-add-container">
+        <h4>📥 إضافة مجموعة أسماء دفعة واحدة (نسخ ولصق)</h4>
+        <textarea id="bulkNamesTextarea" rows="4" placeholder="انسخ قائمة الأسماء من إكسل (اسم في كل سطر) والصقها هنا..."></textarea>
+        <button class="btn-bulk" onclick="addBulkNames()">+ تحويل الأسماء إلى صفوف في الجدول</button>
+    </div>
+
+    <div class="action-bar">
+        <button class="btn-add" onclick="addNewRow()">+ إضافة طالب واحد (صف فارغ)</button>
+        <span style="font-size: 14px; color: #7f8c8d;">جميع الصفوف تعتمد الآن نفس استمارة التقييم (100 درجة).</span>
+    </div>
 
     <div class="table-responsive">
         <table id="gradesTable">
-            <thead id="tableHeader">
-                </thead>
+            <thead>
+                <tr>
+                    <th>م</th>
+                    <th>اسم الطالب</th>
+                    <th>حوار (1)</th>
+                    <th>حوار (2)</th>
+                    <th>عملي (1)</th>
+                    <th>عملي (2)</th>
+                    <th>اختبار قصير</th>
+                    <th>مشروع</th>
+                </tr>
+            </thead>
             <tbody id="tableBody">
                 </tbody>
         </table>
@@ -105,78 +104,63 @@
 
 <script>
     // ==========================================
-    // ⚠️ تنبيه: ضع الرابط الخاص بك هنا بين علامتي التنصيص
+    // ⚠️ تنبيه: ضع الرابط الخاص بك هنا 
     // ==========================================
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbwgrTj52vWsm48ZuMTBcan17uTHSYlaoxOoJx0_p8dB8btbX_eLEffmo1C7ObwINt01TQ/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyevoHK2R0yGIDD6j_s9kluRiQtDuIfS-w83TaPUHHbnzFcOe_ARQMdhfYJN6J9ifpB/exec';
     
-    let rowCount = 0; // لترقيم الطلاب
+    let rowCount = 0; 
 
-    // 1. تحديث عناوين الجدول بناءً على الصف المختار
-    function updateTableHeaders() {
-        const grade = document.getElementById('grade').value;
-        const header = document.getElementById('tableHeader');
-        let html = '<tr><th>م</th><th>اسم الطالب</th><th>حوار (1)</th><th>حوار (2)</th>';
-        
-        if (grade === "8") {
-            html += '<th>سؤال (1)</th><th>سؤال (2)</th><th>سؤال (3)</th><th>سؤال (4)</th><th>عملي (1)</th><th>عملي (2)</th><th>مشروع</th>';
-        } else {
-            html += '<th>عملي (1)</th><th>عملي (2)</th><th>اختبار قصير</th><th>مشروع</th>';
-        }
-        html += '</tr>';
-        header.innerHTML = html;
-        clearTable();
-    }
-
-    // مسح محتوى الجدول
     function clearTable() {
         document.getElementById('tableBody').innerHTML = '';
         rowCount = 0;
     }
 
-    // 2. إضافة صف جديد لطالب
-    // المتغير data يحتوي على مصفوفة الدرجات القادمة من جوجل شيت (في حالة الجلب)
+    // إضافة صف يعتمد استمارة واحدة للجميع
     function addNewRow(data = []) {
         const tbody = document.getElementById('tableBody');
-        const grade = document.getElementById('grade').value;
         const row = document.createElement('tr');
         row.className = 'student-row';
-        
         rowCount++;
 
-        // data[0] = الاسم, data[1] = حوار1, data[2] = حوار2
-        let inputs = `<td class="row-number">${rowCount}</td>
-                      <td><input type="text" class="s-name" value="${data[0] || ''}" placeholder="اكتب اسم الطالب رباعي..."></td>
-                      <td><input type="number" class="s-d1" max="10" value="${data[1] !== undefined ? data[1] : ''}"></td>
-                      <td><input type="number" class="s-d2" max="10" value="${data[2] !== undefined ? data[2] : ''}"></td>`;
-
-        if (grade === "8") {
-            // بيانات الصف الثامن حسب ترتيب الأعمدة في جوجل شيت:
-            // 4=س1, 5=س2, 6=س3, 7=س4 | 9=ع1, 10=ع2 | 12=مشروع
-            inputs += `<td><input type="number" class="s-q1" max="5" value="${data[4] !== undefined ? data[4] : ''}"></td>
-                       <td><input type="number" class="s-q2" max="5" value="${data[5] !== undefined ? data[5] : ''}"></td>
-                       <td><input type="number" class="s-q3" max="5" value="${data[6] !== undefined ? data[6] : ''}"></td>
-                       <td><input type="number" class="s-q4" max="5" value="${data[7] !== undefined ? data[7] : ''}"></td>
-                       <td><input type="number" class="s-a1" max="20" value="${data[9] !== undefined ? data[9] : ''}"></td>
-                       <td><input type="number" class="s-a2" max="20" value="${data[10] !== undefined ? data[10] : ''}"></td>
-                       <td><input type="number" class="s-proj" max="20" value="${data[12] !== undefined ? data[12] : ''}"></td>`;
-        } else {
-            // بيانات الصف العاشر حسب ترتيب الأعمدة في جوجل شيت:
-            // 4=ع1, 5=ع2 | 7=اختبار | 8=مشروع
-            inputs += `<td><input type="number" class="s-a1" max="20" value="${data[4] !== undefined ? data[4] : ''}"></td>
-                       <td><input type="number" class="s-a2" max="20" value="${data[5] !== undefined ? data[5] : ''}"></td>
-                       <td><input type="number" class="s-test" max="20" value="${data[7] !== undefined ? data[7] : ''}"></td>
-                       <td><input type="number" class="s-proj" max="20" value="${data[8] !== undefined ? data[8] : ''}"></td>`;
-        }
-
-        row.innerHTML = inputs;
+        // data map from Google Sheets:
+        // [0]الاسم | [1]حوار1 | [2]حوار2 | [3]مجموع | [4]عملي1 | [5]عملي2 | [6]مجموع | [7]اختبار | [8]مشروع
+        row.innerHTML = `
+            <td class="row-number">${rowCount}</td>
+            <td><input type="text" class="s-name" value="${data[0] || ''}" placeholder="اكتب اسم الطالب..."></td>
+            <td><input type="number" class="s-d1" max="10" value="${data[1] !== undefined ? data[1] : ''}"></td>
+            <td><input type="number" class="s-d2" max="10" value="${data[2] !== undefined ? data[2] : ''}"></td>
+            <td><input type="number" class="s-a1" max="20" value="${data[4] !== undefined ? data[4] : ''}"></td>
+            <td><input type="number" class="s-a2" max="20" value="${data[5] !== undefined ? data[5] : ''}"></td>
+            <td><input type="number" class="s-test" max="20" value="${data[7] !== undefined ? data[7] : ''}"></td>
+            <td><input type="number" class="s-proj" max="20" value="${data[8] !== undefined ? data[8] : ''}"></td>
+        `;
         tbody.appendChild(row);
     }
 
-    // 3. جلب بيانات الطلاب من جوجل شيت
+    function addBulkNames() {
+        const textarea = document.getElementById('bulkNamesTextarea');
+        const lines = textarea.value.split('\n');
+        let addedCount = 0;
+
+        lines.forEach(line => {
+            const name = line.trim();
+            if (name !== '') {
+                addNewRow([name]); 
+                addedCount++;
+            }
+        });
+
+        if (addedCount > 0) {
+            alert(`تمت إضافة ${addedCount} طالب/ة للجدول بنجاح!`);
+            textarea.value = ''; 
+        } else {
+            alert("لم يتم العثور على أسماء. تأكد من اللصق بشكل صحيح.");
+        }
+    }
+
     async function fetchExistingStudents(btn) {
         if(scriptURL === 'رابط_السكريبت_هنا'){
-            alert("يرجى وضع رابط السكريبت (Web App URL) في الكود أولاً!");
-            return;
+            alert("يرجى وضع رابط السكريبت أولاً!"); return;
         }
 
         const grade = document.getElementById('grade').value;
@@ -195,23 +179,19 @@
             if (result.result === "success" && result.data.length > 0) {
                 result.data.forEach(studentData => addNewRow(studentData));
             } else {
-                alert("الورقة فارغة أو غير موجودة حتى الآن. ابدأ بإضافة أسماء الطلاب وسيقوم النظام بإنشائها.");
-                addNewRow(); // إضافة سطر فارغ مبدئي
+                alert("الورقة فارغة أو غير موجودة حتى الآن. يمكنك بدء إضافة الطلاب.");
             }
         } catch (e) { 
-            alert("حدث خطأ في الاتصال بالانترنت أو بالخادم."); 
-            console.error(e);
+            alert("حدث خطأ في الاتصال."); 
         }
         
         btn.innerHTML = originalText;
         btn.disabled = false;
     }
 
-    // 4. تجميع البيانات وإرسالها لجوجل شيت للتخزين
     function submitData() {
         if(scriptURL === 'رابط_السكريبت_هنا'){
-            alert("يرجى وضع رابط السكريبت (Web App URL) في الكود أولاً!");
-            return;
+            alert("يرجى وضع رابط السكريبت أولاً!"); return;
         }
 
         const grade = document.getElementById('grade').value;
@@ -220,37 +200,26 @@
         
         document.querySelectorAll('.student-row').forEach(row => {
             const nameInput = row.querySelector('.s-name').value.trim();
-            if (nameInput !== "") { // تجاهل الأسطر الفارغة
-                const sObj = { name: nameInput };
-                
-                // تجميع الحقول المشتركة
-                sObj.d1 = row.querySelector('.s-d1').value;
-                sObj.d2 = row.querySelector('.s-d2').value;
-                sObj.a1 = row.querySelector('.s-a1').value;
-                sObj.a2 = row.querySelector('.s-a2').value;
-                sObj.proj = row.querySelector('.s-proj').value;
-                
-                // تجميع الحقول الخاصة بالصف
-                if (grade === "8") {
-                    sObj.q1 = row.querySelector('.s-q1').value;
-                    sObj.q2 = row.querySelector('.s-q2').value;
-                    sObj.q3 = row.querySelector('.s-q3').value;
-                    sObj.q4 = row.querySelector('.s-q4').value;
-                } else {
-                    sObj.test = row.querySelector('.s-test').value;
-                }
-                students.push(sObj);
+            if (nameInput !== "") { 
+                students.push({
+                    name: nameInput,
+                    d1: row.querySelector('.s-d1').value,
+                    d2: row.querySelector('.s-d2').value,
+                    a1: row.querySelector('.s-a1').value,
+                    a2: row.querySelector('.s-a2').value,
+                    test: row.querySelector('.s-test').value,
+                    proj: row.querySelector('.s-proj').value
+                });
             }
         });
 
         if (students.length === 0) {
-            alert("لا توجد بيانات ليتم حفظها! الرجاء كتابة اسم طالب واحد على الأقل.");
-            return;
+            alert("لا توجد بيانات لحفظها!"); return;
         }
 
         const saveBtn = document.getElementById('saveBtn');
         const originalText = saveBtn.innerHTML;
-        saveBtn.innerHTML = "⏳ جاري التشفير والحفظ...";
+        saveBtn.innerHTML = "⏳ جاري الحفظ...";
         saveBtn.disabled = true;
 
         fetch(scriptURL, {
@@ -262,7 +231,7 @@
             if(res.result === "success") {
                 alert("✅ تم إرسال وحفظ البيانات بنجاح في جوجل شيت!");
             } else {
-                alert("❌ حدث خطأ في السيرفر: " + res.message);
+                alert("❌ خطأ: " + res.message);
             }
             saveBtn.innerHTML = originalText;
             saveBtn.disabled = false;
@@ -273,11 +242,6 @@
             saveBtn.disabled = false; 
         });
     }
-
-    // تهيئة عناوين الجدول عند فتح الصفحة لأول مرة
-    window.onload = function() {
-        updateTableHeaders();
-    };
 </script>
 
 </body>
