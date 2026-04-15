@@ -12,7 +12,7 @@
             --report-color: #16a085;
         }
 
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 20px; margin: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 20px; padding-bottom: 100px; margin: 0; }
         .container { max-width: 1200px; margin: auto; background: var(--card-bg); padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         h2 { text-align: center; color: var(--text-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; }
         
@@ -25,7 +25,12 @@
         .btn-add { background-color: var(--success-color); } .btn-add:hover { background-color: #2ecc71; }
         .btn-bulk { background-color: var(--purple-color); } .btn-bulk:hover { background-color: #9b59b6; }
         .btn-report { background-color: var(--report-color); font-size: 16px; padding: 12px 20px;} .btn-report:hover { background-color: #1abc9c; }
-        .btn-save { background-color: var(--warning-color); padding: 15px 40px; font-size: 18px; width: 100%; max-width: 400px;} .btn-save:hover { background-color: #d35400; }
+
+        /* زر الحفظ العائم */
+        .floating-save-container { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 999; }
+        .btn-save-floating { background-color: var(--warning-color); padding: 15px 50px; font-size: 20px; border-radius: 50px; box-shadow: 0 6px 20px rgba(230, 126, 34, 0.4); border: 2px solid #fff; }
+        .btn-save-floating:hover { background-color: #d35400; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(211, 84, 0, 0.5); }
+        .btn-save-floating:disabled { background-color: #95a5a6; cursor: not-allowed; box-shadow: none; transform: none;}
 
         .bulk-add-container { background: #fdfefe; padding: 15px; border-radius: 8px; border: 2px dashed #bdc3c7; margin-bottom: 20px; }
         .bulk-add-container textarea { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #bdc3c7; margin-bottom: 10px; font-family: inherit; resize: vertical; box-sizing: border-box; }
@@ -36,9 +41,8 @@
         th, td { border: 1px solid var(--border-color); padding: 10px 6px; text-align: center; }
         th { background-color: #ecf0f1; color: #2c3e50; font-weight: bold; }
         
-        input.s-name { width: 180px; }
-        input.s-phone { width: 110px; text-align: left; direction: ltr; }
-        input[type="number"] { width: 45px; text-align: center; font-weight: bold; }
+        input.s-name { width: 220px; }
+        input[type="number"] { width: 55px; text-align: center; font-weight: bold; }
         input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .row-number { font-weight: bold; color: #7f8c8d; }
 
@@ -48,7 +52,6 @@
         .close-btn { color: #e74c3c; float: left; font-size: 35px; font-weight: bold; cursor: pointer; line-height: 1; }
         .search-box { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 6px; border: 2px solid #bdc3c7; font-size: 16px; box-sizing: border-box;}
         
-        /* بطاقة الطالب التحليلية */
         .student-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; }
         .card-header { background-color: #34495e; color: #fff; padding: 12px 15px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
         .card-body { padding: 15px; }
@@ -58,8 +61,13 @@
         .cat-score { background: #ecf0f1; padding: 2px 8px; border-radius: 4px; font-size: 14px; direction: ltr;}
         .cat-desc { font-size: 14px; color: #555; line-height: 1.5; }
         
-        .whatsapp-btn { background-color: #25D366; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 10px; }
-        .whatsapp-btn:hover { background-color: #128C7E; }
+        /* قسم الواتساب */
+        .whatsapp-section { background: #fdfefe; border: 1px solid #e8e8e8; border-radius: 8px; padding: 15px; margin-top: 15px; }
+        .phone-input-wrapper { display: flex; align-items: center; direction: ltr; justify-content: flex-end; width: max-content; }
+        .phone-prefix { background: #ecf0f1; border: 1px solid #ccc; border-right: none; padding: 10px; border-radius: 5px 0 0 5px; font-weight: bold; color: #2c3e50; }
+        .modal-phone-input { border: 1px solid #ccc; padding: 10px; border-radius: 0 5px 5px 0; width: 140px; text-align: left; font-size: 16px; letter-spacing: 1px; }
+        .whatsapp-btn { background-color: #25D366; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 10px; transition: 0.2s;}
+        .whatsapp-btn:hover { background-color: #128C7E; transform: scale(1.02); }
         
         .border-exc { border-right-color: #27ae60; } .border-vgood { border-right-color: #2980b9; }
         .border-good { border-right-color: #f1c40f; } .border-weak { border-right-color: #e74c3c; } .border-none { border-right-color: #95a5a6; }
@@ -100,18 +108,20 @@
         <table id="gradesTable">
             <thead>
                 <tr>
-                    <th>م</th><th>اسم الطالب</th><th>رقم ولي الأمر</th>
-                    <th>حوار(1)</th><th>حوار(2)</th><th>عملي(1)</th><th>عملي(2)</th>
+                    <th>م</th>
+                    <th>اسم الطالب</th>
+                    <th>حوار(1)</th><th>حوار(2)</th>
+                    <th>عملي(1)</th><th>عملي(2)</th>
                     <th>اختبار</th><th>مشروع</th>
                 </tr>
             </thead>
             <tbody id="tableBody"></tbody>
         </table>
     </div>
+</div>
 
-    <div style="text-align: center;">
-        <button id="saveBtn" class="btn-save" onclick="submitData()">💾 حفظ البيانات في جوجل شيت</button>
-    </div>
+<div class="floating-save-container">
+    <button id="saveBtn" class="btn-save-floating" onclick="submitData()">💾 حفظ البيانات في جوجل شيت</button>
 </div>
 
 <div id="reportsModal" class="modal">
@@ -128,7 +138,7 @@
     // ==========================================
     // ⚠️ تنبيه: ضع الرابط الخاص بك هنا 
     // ==========================================
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzrj2-rAbhpPICSCGvxMj6FXyhFy2cNrQWWYnaEBsJdrSZtXT4-mcBEfSJkx8CTzZ9ofQ/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxAj9v8wJm1w0rAtXkiDxi4qdy0KY-o40FvOEDZNXYl3unMEioZfT-aVKNQSSyeOm5CLA/exec';
     
     let rowCount = 0; 
 
@@ -143,11 +153,12 @@
         row.className = 'student-row';
         rowCount++;
 
-        // data map: [0]Name, [1]D1, [2]D2, [3]D_Tot, [4]A1, [5]A2, [6]A_Tot, [7]Test, [8]Proj, [9]G_Tot, [10]Phone
         row.innerHTML = `
             <td class="row-number">${rowCount}</td>
-            <td><input type="text" class="s-name" value="${data[0] || ''}" placeholder="اسم الطالب"></td>
-            <td><input type="text" class="s-phone" value="${data[10] || ''}" placeholder="مثال: 9689XXXXXXX"></td>
+            <td>
+                <input type="text" class="s-name" value="${data[0] || ''}" placeholder="اسم الطالب">
+                <input type="hidden" id="st-phone-${rowCount}" class="s-phone" value="${data[10] || ''}">
+            </td>
             <td><input type="number" class="s-d1" max="10" value="${data[1] !== undefined ? data[1] : ''}"></td>
             <td><input type="number" class="s-d2" max="10" value="${data[2] !== undefined ? data[2] : ''}"></td>
             <td><input type="number" class="s-a1" max="20" value="${data[4] !== undefined ? data[4] : ''}"></td>
@@ -186,7 +197,7 @@
     }
 
     function submitData() {
-        if(scriptURL === ''){ alert("يرجى وضع الرابط أولاً!"); return; }
+        if(scriptURL === 'ضع_الرابط_هنا'){ alert("يرجى وضع الرابط أولاً!"); return; }
         const grade = document.getElementById('grade').value;
         const section = document.getElementById('section').value;
         const students = [];
@@ -196,7 +207,7 @@
             if (nameInput !== "") { 
                 students.push({
                     name: nameInput,
-                    phone: row.querySelector('.s-phone').value.trim(),
+                    phone: row.querySelector('.s-phone').value.trim(), 
                     d1: row.querySelector('.s-d1').value,
                     d2: row.querySelector('.s-d2').value,
                     a1: row.querySelector('.s-a1').value,
@@ -223,7 +234,7 @@
     }
 
     // ==========================================
-    // محرك التقارير والعبارات الوصفية
+    // محرك التقارير والعبارات الوصفية الديناميكي
     // ==========================================
     function getPhrase(type, percent) {
         if(isNaN(percent)) return { text: "لم يتم رصد الدرجة بعد.", class: "border-none" };
@@ -260,20 +271,51 @@
         }
     }
 
+    // تحديث الرقم ديناميكياً للواتساب
+    function updatePhoneAndLink(rowId, newPhone) {
+        // تنظيف المدخلات للإبقاء على الأرقام فقط
+        let cleanPhone = newPhone.replace(/\D/g, '');
+        
+        // حفظ الرقم في الجدول الرئيسي ليتم إرساله لجوجل شيت لاحقاً
+        document.getElementById(`st-phone-${rowId}`).value = cleanPhone;
+        
+        const waBtn = document.getElementById(`wa-btn-${rowId}`);
+        const warning = document.getElementById(`wa-warn-${rowId}`);
+        const rawMsg = decodeURIComponent(waBtn.getAttribute('data-msg'));
+        
+        // التحقق إذا كان الرقم يتكون من 8 خانات
+        if(cleanPhone.length === 8) {
+            let fullPhone = '968' + cleanPhone; // إضافة مفتاح السلطنة تلقائياً
+            waBtn.href = `https://wa.me/${fullPhone}?text=${encodeURIComponent(rawMsg)}`;
+            waBtn.style.display = 'inline-flex';
+            if(warning) warning.style.display = 'none';
+        } else {
+            waBtn.removeAttribute('href');
+            waBtn.style.display = 'none';
+            if(warning) warning.style.display = 'block';
+        }
+    }
+
     function openReportsModal() {
         const container = document.getElementById('reportsContainer');
         container.innerHTML = '';
         
         const rows = document.querySelectorAll('.student-row');
-        if(rows.length === 0) { alert("الجدول فارغ! اجلب البيانات أولاً."); return; }
+        if(rows.length === 0) { alert("الجدول فارغ! اجلب البيانات أو أضف طلاباً أولاً."); return; }
 
         rows.forEach(row => {
             const num = row.querySelector('.row-number').innerText;
             const name = row.querySelector('.s-name').value.trim();
-            const phone = row.querySelector('.s-phone').value.trim();
+            // سحب الرقم المخزن (تنظيفه تحسباً)
+            let phoneRaw = row.querySelector('.s-phone').value.trim();
+            let cleanPhone = phoneRaw.replace(/\D/g, '');
+            // إذا كان الرقم محفوظاً مسبقاً بمفتاح الدولة 968 يتم تجريده ليعرض 8 خانات فقط في الحقل
+            if(cleanPhone.startsWith('968') && cleanPhone.length === 11) {
+                cleanPhone = cleanPhone.substring(3);
+            }
+
             if(!name) return;
 
-            // حساب الدرجات الحالية
             const d1 = Number(row.querySelector('.s-d1').value) || 0;
             const d2 = Number(row.querySelector('.s-d2').value) || 0;
             const a1 = Number(row.querySelector('.s-a1').value) || 0;
@@ -281,32 +323,23 @@
             const test = Number(row.querySelector('.s-test').value) || 0;
             const proj = Number(row.querySelector('.s-proj').value) || 0;
 
-            const dTot = d1 + d2; 
-            const aTot = a1 + a2;
+            const dTot = d1 + d2; const aTot = a1 + a2;
             const grandTot = dTot + aTot + test + proj;
 
-            // جلب العبارات
             const pDiag = getPhrase("dialogue", dTot > 0 ? (dTot/20)*100 : NaN);
             const pAct = getPhrase("activity", aTot > 0 ? (aTot/40)*100 : NaN);
             const pTest = getPhrase("test", test > 0 ? (test/20)*100 : NaN);
             const pProj = getPhrase("project", proj > 0 ? (proj/20)*100 : NaN);
             const pTot = getPhrase("total", grandTot > 0 ? (grandTot/100)*100 : NaN);
 
-            // تجهيز رسالة الواتساب
-            let waMsg = `السلام عليكم ولي أمر الطالب: *${name}*\n\n`;
-            waMsg += `📊 *تقرير الأداء الأكاديمي في مادة تقنية المعلومات:*\n`;
-            waMsg += `- التفاعل والحوار (${dTot}/20): ${pDiag.text}\n`;
-            waMsg += `- الأنشطة العملية (${aTot}/40): ${pAct.text}\n`;
-            waMsg += `- الاختبار القصير (${test}/20): ${pTest.text}\n`;
-            waMsg += `- المشروع (${proj}/20): ${pProj.text}\n\n`;
+            let waMsg = `السلام عليكم ولي أمر الطالب: *${name}*\n\n📊 *تقرير الأداء الأكاديمي في مادة تقنية المعلومات:*\n`;
+            waMsg += `- التفاعل والحوار (${dTot}/20): ${pDiag.text}\n- الأنشطة العملية (${aTot}/40): ${pAct.text}\n`;
+            waMsg += `- الاختبار القصير (${test}/20): ${pTest.text}\n- المشروع (${proj}/20): ${pProj.text}\n\n`;
             waMsg += `📈 *النتيجة الكلية الحالية:* ${grandTot}/100\n*الخلاصة:* ${pTot.text}\n\nمع تحيات معلم المادة.`;
             
-            const waLink = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(waMsg)}` : `#`;
-            const waBtnHTML = phone ? 
-                `<a href="${waLink}" target="_blank" class="whatsapp-btn">💬 إرسال التقرير لولي الأمر عبر واتساب</a>` : 
-                `<div style="color:#e74c3c; font-size:13px; margin-top:10px;">⚠️ لم يتم تسجيل رقم واتساب لهذا الطالب.</div>`;
+            let isPhoneValid = (cleanPhone.length === 8);
+            let fullPhone = isPhoneValid ? '968' + cleanPhone : '';
 
-            // بناء البطاقة
             container.innerHTML += `
                 <div class="student-card search-item">
                     <div class="card-header">
@@ -330,10 +363,16 @@
                             <div class="cat-title"><span>🚀 المشروع التقني</span> <span class="cat-score">${proj}/20</span></div>
                             <div class="cat-desc">${pProj.text}</div>
                         </div>
-                        <div style="margin-top:15px; padding:10px; background:#f4f7f6; border-radius:5px; border:1px solid #ccc;">
-                            <strong>📌 الخلاصة العامة:</strong> ${pTot.text}
+                        
+                        <div class="whatsapp-section">
+                            <label style="font-weight:bold; display:block; margin-bottom:8px; text-align:right;">📱 رقم هاتف ولي الأمر (8 أرقام فقط):</label>
+                            <div class="phone-input-wrapper">
+                                <span class="phone-prefix">+968</span>
+                                <input type="text" class="modal-phone-input" maxlength="8" value="${cleanPhone}" placeholder="9XXXXXXX" oninput="updatePhoneAndLink('${num}', this.value)">
+                            </div>
+                            <a href="${isPhoneValid ? `https://wa.me/${fullPhone}?text=${encodeURIComponent(waMsg)}` : '#'}" target="_blank" id="wa-btn-${num}" class="whatsapp-btn" style="display: ${isPhoneValid ? 'inline-flex' : 'none'};" data-msg="${encodeURIComponent(waMsg)}">💬 إرسال التقرير لولي الأمر عبر واتساب</a>
+                            <div id="wa-warn-${num}" style="color:#e74c3c; font-size:13px; margin-top:5px; display: ${isPhoneValid ? 'none' : 'block'}; text-align:right;">⚠️ يرجى إدخال الرقم المكون من 8 خانات ليظهر زر الإرسال.</div>
                         </div>
-                        ${waBtnHTML}
                     </div>
                 </div>
             `;
