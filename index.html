@@ -9,47 +9,66 @@
             --bg-color: #f4f7f6; --text-color: #2c3e50; --card-bg: #ffffff;
             --border-color: #ddd; --input-bg: #fff; --primary-color: #3498db;
             --success-color: #27ae60; --warning-color: #e67e22; --purple-color: #8e44ad;
+            --report-color: #16a085;
         }
 
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 20px; margin: 0; }
-        .container { max-width: 1100px; margin: auto; background: var(--card-bg); padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .container { max-width: 1200px; margin: auto; background: var(--card-bg); padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         h2 { text-align: center; color: var(--text-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 25px; }
         
-        .controls { display: flex; gap: 15px; margin-bottom: 25px; justify-content: center; flex-wrap: wrap; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
-        select, button { padding: 12px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 16px; font-family: inherit;}
-        select { background-color: var(--input-bg); min-width: 150px; cursor: pointer; }
+        .controls { display: flex; gap: 15px; margin-bottom: 20px; justify-content: center; flex-wrap: wrap; background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
+        select, button, input[type="text"], input[type="number"] { padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 15px; font-family: inherit;}
+        select { background-color: var(--input-bg); min-width: 130px; cursor: pointer; }
         
         button { font-weight: bold; cursor: pointer; transition: 0.3s; color: white; border: none; }
-        .btn-fetch { background-color: var(--primary-color); }
-        .btn-fetch:hover { background-color: #2980b9; }
-        .btn-add { background-color: var(--success-color); display: inline-block; }
-        .btn-add:hover { background-color: #2ecc71; }
-        .btn-bulk { background-color: var(--purple-color); }
-        .btn-bulk:hover { background-color: #9b59b6; }
-        .btn-save { background-color: var(--warning-color); padding: 15px 40px; font-size: 18px; width: 100%; max-width: 400px;}
-        .btn-save:hover { background-color: #d35400; }
-        .btn-save:disabled { background-color: #95a5a6; cursor: not-allowed; }
+        .btn-fetch { background-color: var(--primary-color); } .btn-fetch:hover { background-color: #2980b9; }
+        .btn-add { background-color: var(--success-color); } .btn-add:hover { background-color: #2ecc71; }
+        .btn-bulk { background-color: var(--purple-color); } .btn-bulk:hover { background-color: #9b59b6; }
+        .btn-report { background-color: var(--report-color); font-size: 16px; padding: 12px 20px;} .btn-report:hover { background-color: #1abc9c; }
+        .btn-save { background-color: var(--warning-color); padding: 15px 40px; font-size: 18px; width: 100%; max-width: 400px;} .btn-save:hover { background-color: #d35400; }
 
         .bulk-add-container { background: #fdfefe; padding: 15px; border-radius: 8px; border: 2px dashed #bdc3c7; margin-bottom: 20px; }
-        .bulk-add-container h4 { margin-top: 0; color: var(--purple-color); margin-bottom: 10px; }
-        textarea { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #bdc3c7; margin-bottom: 10px; font-family: inherit; font-size: 15px; resize: vertical; box-sizing: border-box; }
-        .action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .bulk-add-container textarea { width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #bdc3c7; margin-bottom: 10px; font-family: inherit; resize: vertical; box-sizing: border-box; }
+        .action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px; flex-wrap: wrap;}
         
         .table-responsive { overflow-x: auto; margin-bottom: 30px; border-radius: 8px; border: 1px solid var(--border-color); }
         table { width: 100%; border-collapse: collapse; white-space: nowrap; }
-        th, td { border: 1px solid var(--border-color); padding: 12px 8px; text-align: center; }
+        th, td { border: 1px solid var(--border-color); padding: 10px 6px; text-align: center; }
         th { background-color: #ecf0f1; color: #2c3e50; font-weight: bold; }
         
-        input[type="text"] { width: 220px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 14px; }
-        input[type="number"] { width: 55px; padding: 8px 4px; text-align: center; border: 1px solid #ccc; border-radius: 4px; font-weight: bold; font-family: inherit;}
+        input.s-name { width: 180px; }
+        input.s-phone { width: 110px; text-align: left; direction: ltr; }
+        input[type="number"] { width: 45px; text-align: center; font-weight: bold; }
         input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
         .row-number { font-weight: bold; color: #7f8c8d; }
+
+        /* نافذة التقارير */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(4px); }
+        .modal-content { background-color: #f9f9f9; margin: 2% auto; padding: 25px; border-radius: 12px; width: 95%; max-width: 900px; max-height: 90vh; overflow-y: auto; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+        .close-btn { color: #e74c3c; float: left; font-size: 35px; font-weight: bold; cursor: pointer; line-height: 1; }
+        .search-box { width: 100%; padding: 12px; margin-bottom: 20px; border-radius: 6px; border: 2px solid #bdc3c7; font-size: 16px; box-sizing: border-box;}
+        
+        /* بطاقة الطالب التحليلية */
+        .student-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); overflow: hidden; }
+        .card-header { background-color: #34495e; color: #fff; padding: 12px 15px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .card-body { padding: 15px; }
+        
+        .cat-box { background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; padding: 12px; margin-bottom: 10px; display: flex; flex-direction: column; border-right: 5px solid #ccc; }
+        .cat-title { font-weight: bold; color: #2c3e50; display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .cat-score { background: #ecf0f1; padding: 2px 8px; border-radius: 4px; font-size: 14px; direction: ltr;}
+        .cat-desc { font-size: 14px; color: #555; line-height: 1.5; }
+        
+        .whatsapp-btn { background-color: #25D366; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; margin-top: 10px; }
+        .whatsapp-btn:hover { background-color: #128C7E; }
+        
+        .border-exc { border-right-color: #27ae60; } .border-vgood { border-right-color: #2980b9; }
+        .border-good { border-right-color: #f1c40f; } .border-weak { border-right-color: #e74c3c; } .border-none { border-right-color: #95a5a6; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>منصة رصد الدرجات الإلكترونية الموحدة</h2>
+    <h2>منصة رصد الدرجات والتقارير الوصفية</h2>
     
     <div class="controls">
         <select id="grade" onchange="clearTable()">
@@ -57,48 +76,51 @@
             <option value="10">الصف العاشر</option>
         </select>
         <select id="section" onchange="clearTable()">
-            <option value="1">شعبة 1</option>
-            <option value="2">شعبة 2</option>
-            <option value="3">شعبة 3</option>
-            <option value="4">شعبة 4</option>
-            <option value="5">شعبة 5</option>
-            <option value="6">شعبة 6</option>
+            <option value="1">شعبة 1</option><option value="2">شعبة 2</option>
+            <option value="3">شعبة 3</option><option value="4">شعبة 4</option>
+            <option value="5">شعبة 5</option><option value="6">شعبة 6</option>
         </select>
-        <button class="btn-fetch" onclick="fetchExistingStudents(this)">🔄 جلب الأسماء والدرجات المسجلة</button>
+        <button class="btn-fetch" onclick="fetchExistingStudents(this)">🔄 جلب الأسماء والدرجات</button>
     </div>
 
     <div class="bulk-add-container">
-        <h4>📥 إضافة مجموعة أسماء دفعة واحدة (نسخ ولصق)</h4>
-        <textarea id="bulkNamesTextarea" rows="4" placeholder="انسخ قائمة الأسماء من إكسل (اسم في كل سطر) والصقها هنا..."></textarea>
-        <button class="btn-bulk" onclick="addBulkNames()">+ تحويل الأسماء إلى صفوف في الجدول</button>
+        <h4>📥 إضافة مجموعة أسماء دفعة واحدة</h4>
+        <textarea id="bulkNamesTextarea" rows="3" placeholder="انسخ قائمة الأسماء من إكسل (اسم في كل سطر) والصقها هنا..."></textarea>
+        <button class="btn-bulk" onclick="addBulkNames()">+ تحويل الأسماء إلى صفوف</button>
     </div>
 
     <div class="action-bar">
-        <button class="btn-add" onclick="addNewRow()">+ إضافة طالب واحد (صف فارغ)</button>
-        <span style="font-size: 14px; color: #7f8c8d;">جميع الصفوف تعتمد الآن نفس استمارة التقييم (100 درجة).</span>
+        <div>
+            <button class="btn-add" onclick="addNewRow()">+ إضافة طالب جديد</button>
+        </div>
+        <button class="btn-report" onclick="openReportsModal()">📊 لوحة التقارير الوصفية والواتساب</button>
     </div>
 
     <div class="table-responsive">
         <table id="gradesTable">
             <thead>
                 <tr>
-                    <th>م</th>
-                    <th>اسم الطالب</th>
-                    <th>حوار (1)</th>
-                    <th>حوار (2)</th>
-                    <th>عملي (1)</th>
-                    <th>عملي (2)</th>
-                    <th>اختبار قصير</th>
-                    <th>مشروع</th>
+                    <th>م</th><th>اسم الطالب</th><th>رقم ولي الأمر</th>
+                    <th>حوار(1)</th><th>حوار(2)</th><th>عملي(1)</th><th>عملي(2)</th>
+                    <th>اختبار</th><th>مشروع</th>
                 </tr>
             </thead>
-            <tbody id="tableBody">
-                </tbody>
+            <tbody id="tableBody"></tbody>
         </table>
     </div>
 
     <div style="text-align: center;">
-        <button id="saveBtn" class="btn-save" onclick="submitData()">💾 حفظ البيانات وإرسالها لجوجل شيت</button>
+        <button id="saveBtn" class="btn-save" onclick="submitData()">💾 حفظ البيانات في جوجل شيت</button>
+    </div>
+</div>
+
+<div id="reportsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeReportsModal()">&times;</span>
+        <h2 style="border:none; margin-bottom:10px;">التقارير التحليلية والتواصل</h2>
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 ابحث عن طالب بالاسم أو برقم التسلسل (م)..." onkeyup="filterReports()">
+        <div id="reportsContainer">
+            </div>
     </div>
 </div>
 
@@ -106,7 +128,7 @@
     // ==========================================
     // ⚠️ تنبيه: ضع الرابط الخاص بك هنا 
     // ==========================================
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyevoHK2R0yGIDD6j_s9kluRiQtDuIfS-w83TaPUHHbnzFcOe_ARQMdhfYJN6J9ifpB/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzrj2-rAbhpPICSCGvxMj6FXyhFy2cNrQWWYnaEBsJdrSZtXT4-mcBEfSJkx8CTzZ9ofQ/exec';
     
     let rowCount = 0; 
 
@@ -115,18 +137,17 @@
         rowCount = 0;
     }
 
-    // إضافة صف يعتمد استمارة واحدة للجميع
     function addNewRow(data = []) {
         const tbody = document.getElementById('tableBody');
         const row = document.createElement('tr');
         row.className = 'student-row';
         rowCount++;
 
-        // data map from Google Sheets:
-        // [0]الاسم | [1]حوار1 | [2]حوار2 | [3]مجموع | [4]عملي1 | [5]عملي2 | [6]مجموع | [7]اختبار | [8]مشروع
+        // data map: [0]Name, [1]D1, [2]D2, [3]D_Tot, [4]A1, [5]A2, [6]A_Tot, [7]Test, [8]Proj, [9]G_Tot, [10]Phone
         row.innerHTML = `
             <td class="row-number">${rowCount}</td>
-            <td><input type="text" class="s-name" value="${data[0] || ''}" placeholder="اكتب اسم الطالب..."></td>
+            <td><input type="text" class="s-name" value="${data[0] || ''}" placeholder="اسم الطالب"></td>
+            <td><input type="text" class="s-phone" value="${data[10] || ''}" placeholder="مثال: 9689XXXXXXX"></td>
             <td><input type="number" class="s-d1" max="10" value="${data[1] !== undefined ? data[1] : ''}"></td>
             <td><input type="number" class="s-d2" max="10" value="${data[2] !== undefined ? data[2] : ''}"></td>
             <td><input type="number" class="s-a1" max="20" value="${data[4] !== undefined ? data[4] : ''}"></td>
@@ -140,60 +161,32 @@
     function addBulkNames() {
         const textarea = document.getElementById('bulkNamesTextarea');
         const lines = textarea.value.split('\n');
-        let addedCount = 0;
-
         lines.forEach(line => {
-            const name = line.trim();
-            if (name !== '') {
-                addNewRow([name]); 
-                addedCount++;
-            }
+            if (line.trim() !== '') addNewRow([line.trim()]); 
         });
-
-        if (addedCount > 0) {
-            alert(`تمت إضافة ${addedCount} طالب/ة للجدول بنجاح!`);
-            textarea.value = ''; 
-        } else {
-            alert("لم يتم العثور على أسماء. تأكد من اللصق بشكل صحيح.");
-        }
+        textarea.value = ''; 
     }
 
     async function fetchExistingStudents(btn) {
-        if(scriptURL === 'رابط_السكريبت_هنا'){
-            alert("يرجى وضع رابط السكريبت أولاً!"); return;
-        }
-
+        if(scriptURL === 'ضع_الرابط_هنا'){ alert("يرجى وضع الرابط أولاً!"); return; }
         const grade = document.getElementById('grade').value;
         const section = document.getElementById('section').value;
         const originalText = btn.innerHTML;
-        
-        btn.innerHTML = "⏳ جاري الاتصال بالخادم...";
-        btn.disabled = true;
+        btn.innerHTML = "⏳ جاري الجلب..."; btn.disabled = true;
         
         try {
             const response = await fetch(`${scriptURL}?grade=${grade}&section=${section}`);
             const result = await response.json();
-            
             clearTable();
-            
             if (result.result === "success" && result.data.length > 0) {
                 result.data.forEach(studentData => addNewRow(studentData));
-            } else {
-                alert("الورقة فارغة أو غير موجودة حتى الآن. يمكنك بدء إضافة الطلاب.");
-            }
-        } catch (e) { 
-            alert("حدث خطأ في الاتصال."); 
-        }
-        
-        btn.innerHTML = originalText;
-        btn.disabled = false;
+            } else { alert("الورقة فارغة. ابدأ بإضافة الطلاب."); }
+        } catch (e) { alert("حدث خطأ في الاتصال."); }
+        btn.innerHTML = originalText; btn.disabled = false;
     }
 
     function submitData() {
-        if(scriptURL === 'رابط_السكريبت_هنا'){
-            alert("يرجى وضع رابط السكريبت أولاً!"); return;
-        }
-
+        if(scriptURL === ''){ alert("يرجى وضع الرابط أولاً!"); return; }
         const grade = document.getElementById('grade').value;
         const section = document.getElementById('section').value;
         const students = [];
@@ -203,6 +196,7 @@
             if (nameInput !== "") { 
                 students.push({
                     name: nameInput,
+                    phone: row.querySelector('.s-phone').value.trim(),
                     d1: row.querySelector('.s-d1').value,
                     d2: row.querySelector('.s-d2').value,
                     a1: row.querySelector('.s-a1').value,
@@ -213,34 +207,150 @@
             }
         });
 
-        if (students.length === 0) {
-            alert("لا توجد بيانات لحفظها!"); return;
-        }
+        if (students.length === 0) { alert("لا توجد بيانات لحفظها!"); return; }
 
         const saveBtn = document.getElementById('saveBtn');
         const originalText = saveBtn.innerHTML;
-        saveBtn.innerHTML = "⏳ جاري الحفظ...";
-        saveBtn.disabled = true;
+        saveBtn.innerHTML = "⏳ جاري الحفظ..."; saveBtn.disabled = true;
 
-        fetch(scriptURL, {
-            method: 'POST',
-            body: JSON.stringify({ grade: grade, section: section, students: students })
-        })
+        fetch(scriptURL, { method: 'POST', body: JSON.stringify({ grade, section, students }) })
         .then(res => res.json())
         .then(res => {
-            if(res.result === "success") {
-                alert("✅ تم إرسال وحفظ البيانات بنجاح في جوجل شيت!");
-            } else {
-                alert("❌ خطأ: " + res.message);
-            }
-            saveBtn.innerHTML = originalText;
-            saveBtn.disabled = false;
-        })
-        .catch(e => { 
-            alert("❌ حدث خطأ في الاتصال!"); 
-            saveBtn.innerHTML = originalText;
-            saveBtn.disabled = false; 
+            if(res.result === "success") alert("✅ تم حفظ البيانات في جوجل شيت!");
+            else alert("❌ خطأ: " + res.message);
+            saveBtn.innerHTML = originalText; saveBtn.disabled = false;
+        }).catch(e => { alert("❌ خطأ في الاتصال!"); saveBtn.innerHTML = originalText; saveBtn.disabled = false; });
+    }
+
+    // ==========================================
+    // محرك التقارير والعبارات الوصفية
+    // ==========================================
+    function getPhrase(type, percent) {
+        if(isNaN(percent)) return { text: "لم يتم رصد الدرجة بعد.", class: "border-none" };
+        
+        if (type === "dialogue") {
+            if (percent >= 90) return { text: "ممتاز جداً في التعبير عن أفكاره، يشارك بفاعلية ويثري الحوار الصفي.", class: "border-exc" };
+            if (percent >= 75) return { text: "مشاركته جيدة جداً، يتفاعل بشكل إيجابي أثناء الشرح والمناقشة.", class: "border-vgood" };
+            if (percent >= 50) return { text: "تفاعله مقبول، ينصح بتحفيزه على المشاركة والتعبير عن رأيه بثقة أكبر.", class: "border-good" };
+            return { text: "نادر المشاركة في الحوار. يحتاج إلى دعم مكثف وتشجيع مستمر لكسر حاجز الخجل.", class: "border-weak" };
+        }
+        if (type === "activity") {
+            if (percent >= 90) return { text: "ينجز المهارات والأنشطة العملية بدقة واحترافية عالية تفوق التوقعات.", class: "border-exc" };
+            if (percent >= 75) return { text: "أداؤه في الأنشطة العملية جيد جداً، وينهي مهامه في الوقت المحدد.", class: "border-vgood" };
+            if (percent >= 50) return { text: "يطبق المهارات بشكل مرضي، ولكنه بحاجة لمزيد من التركيز على الدقة.", class: "border-good" };
+            return { text: "يواجه صعوبات ملحوظة في الجانب العملي، يحتاج لتدريب وتطبيق منزلي مكثف.", class: "border-weak" };
+        }
+        if (type === "test") {
+            if (percent >= 90) return { text: "استيعاب ممتاز للمفاهيم النظرية، إجاباته دقيقة وتدل على مراجعة ممتازة.", class: "border-exc" };
+            if (percent >= 75) return { text: "مستواه في الاختبارات جيد جداً، مع بعض الأخطاء البسيطة التي يمكن تداركها.", class: "border-vgood" };
+            if (percent >= 50) return { text: "مستوى الإنجاز متوسط، يتطلب الأمر زيادة ساعات الاستذكار بالمنزل.", class: "border-good" };
+            return { text: "درجات الاختبار ضعيفة. نرجو من ولي الأمر المتابعة الحثيثة لاستذكار الطالب.", class: "border-weak" };
+        }
+        if (type === "project") {
+            if (percent >= 90) return { text: "إنجاز إبداعي ومتقن للمشروع، يعكس فهماً عميقاً وقدرة عالية على البحث والتنفيذ.", class: "border-exc" };
+            if (percent >= 75) return { text: "نفذ المشروع بشكل جيد جداً، مع الالتزام بأغلب المعايير المطلوبة.", class: "border-vgood" };
+            if (percent >= 50) return { text: "تسليم المشروع كان بجهد مقبول، ولكن كان بالإمكان تقديمه بصورة أفضل وأكثر شمولية.", class: "border-good" };
+            return { text: "المشروع غير مكتمل أو ضعيف جداً، يحتاج للاهتمام بجودة تسليم المتطلبات.", class: "border-weak" };
+        }
+        if (type === "total") {
+            if (percent >= 90) return { text: "مستوى الطالب العام متميز، نتمنى له الاستمرار على هذا التفوق.", class: "border-exc" };
+            if (percent >= 75) return { text: "مستوى الطالب العام جيد جداً، ويمتلك القدرة على الوصول للامتياز.", class: "border-vgood" };
+            if (percent >= 50) return { text: "مستوى الطالب العام مرضي، ونطمح لجهد أكبر للارتقاء بمستواه.", class: "border-good" };
+            return { text: "مستوى الطالب يحتاج لمتابعة عاجلة وخطة علاجية للنهوض بمستواه الأكاديمي.", class: "border-weak" };
+        }
+    }
+
+    function openReportsModal() {
+        const container = document.getElementById('reportsContainer');
+        container.innerHTML = '';
+        
+        const rows = document.querySelectorAll('.student-row');
+        if(rows.length === 0) { alert("الجدول فارغ! اجلب البيانات أولاً."); return; }
+
+        rows.forEach(row => {
+            const num = row.querySelector('.row-number').innerText;
+            const name = row.querySelector('.s-name').value.trim();
+            const phone = row.querySelector('.s-phone').value.trim();
+            if(!name) return;
+
+            // حساب الدرجات الحالية
+            const d1 = Number(row.querySelector('.s-d1').value) || 0;
+            const d2 = Number(row.querySelector('.s-d2').value) || 0;
+            const a1 = Number(row.querySelector('.s-a1').value) || 0;
+            const a2 = Number(row.querySelector('.s-a2').value) || 0;
+            const test = Number(row.querySelector('.s-test').value) || 0;
+            const proj = Number(row.querySelector('.s-proj').value) || 0;
+
+            const dTot = d1 + d2; 
+            const aTot = a1 + a2;
+            const grandTot = dTot + aTot + test + proj;
+
+            // جلب العبارات
+            const pDiag = getPhrase("dialogue", dTot > 0 ? (dTot/20)*100 : NaN);
+            const pAct = getPhrase("activity", aTot > 0 ? (aTot/40)*100 : NaN);
+            const pTest = getPhrase("test", test > 0 ? (test/20)*100 : NaN);
+            const pProj = getPhrase("project", proj > 0 ? (proj/20)*100 : NaN);
+            const pTot = getPhrase("total", grandTot > 0 ? (grandTot/100)*100 : NaN);
+
+            // تجهيز رسالة الواتساب
+            let waMsg = `السلام عليكم ولي أمر الطالب: *${name}*\n\n`;
+            waMsg += `📊 *تقرير الأداء الأكاديمي في مادة تقنية المعلومات:*\n`;
+            waMsg += `- التفاعل والحوار (${dTot}/20): ${pDiag.text}\n`;
+            waMsg += `- الأنشطة العملية (${aTot}/40): ${pAct.text}\n`;
+            waMsg += `- الاختبار القصير (${test}/20): ${pTest.text}\n`;
+            waMsg += `- المشروع (${proj}/20): ${pProj.text}\n\n`;
+            waMsg += `📈 *النتيجة الكلية الحالية:* ${grandTot}/100\n*الخلاصة:* ${pTot.text}\n\nمع تحيات معلم المادة.`;
+            
+            const waLink = phone ? `https://wa.me/${phone}?text=${encodeURIComponent(waMsg)}` : `#`;
+            const waBtnHTML = phone ? 
+                `<a href="${waLink}" target="_blank" class="whatsapp-btn">💬 إرسال التقرير لولي الأمر عبر واتساب</a>` : 
+                `<div style="color:#e74c3c; font-size:13px; margin-top:10px;">⚠️ لم يتم تسجيل رقم واتساب لهذا الطالب.</div>`;
+
+            // بناء البطاقة
+            container.innerHTML += `
+                <div class="student-card search-item">
+                    <div class="card-header">
+                        <span class="st-title">${num}. ${name}</span>
+                        <span style="font-size:14px;">المجموع: ${grandTot}/100</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="cat-box ${pDiag.class}">
+                            <div class="cat-title"><span>🗣️ التفاعل والحوار</span> <span class="cat-score">${dTot}/20</span></div>
+                            <div class="cat-desc">${pDiag.text}</div>
+                        </div>
+                        <div class="cat-box ${pAct.class}">
+                            <div class="cat-title"><span>💻 الأنشطة العملية</span> <span class="cat-score">${aTot}/40</span></div>
+                            <div class="cat-desc">${pAct.text}</div>
+                        </div>
+                        <div class="cat-box ${pTest.class}">
+                            <div class="cat-title"><span>📝 الاختبار القصير</span> <span class="cat-score">${test}/20</span></div>
+                            <div class="cat-desc">${pTest.text}</div>
+                        </div>
+                        <div class="cat-box ${pProj.class}">
+                            <div class="cat-title"><span>🚀 المشروع التقني</span> <span class="cat-score">${proj}/20</span></div>
+                            <div class="cat-desc">${pProj.text}</div>
+                        </div>
+                        <div style="margin-top:15px; padding:10px; background:#f4f7f6; border-radius:5px; border:1px solid #ccc;">
+                            <strong>📌 الخلاصة العامة:</strong> ${pTot.text}
+                        </div>
+                        ${waBtnHTML}
+                    </div>
+                </div>
+            `;
         });
+
+        document.getElementById('reportsModal').style.display = "block";
+    }
+
+    function closeReportsModal() { document.getElementById('reportsModal').style.display = "none"; }
+
+    function filterReports() {
+        let input = document.getElementById('searchInput').value.toLowerCase();
+        let cards = document.getElementsByClassName('search-item');
+        for (let i = 0; i < cards.length; i++) {
+            let title = cards[i].querySelector('.st-title').innerText.toLowerCase();
+            cards[i].style.display = title.includes(input) ? "" : "none";
+        }
     }
 </script>
 
