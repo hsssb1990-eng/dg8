@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة رصد الدرجات الشاملة</title>
+    <title>منصة بيان</title>
     <style>
         :root {
             --bg-color: #f4f7f6; --text-color: #2c3e50; --card-bg: #ffffff;
@@ -76,7 +76,8 @@
 <body>
 
 <div class="container">
-    <h2>منصة رصد الدرجات والتقارير الوصفية</h2>
+    <h2>منصة بيان</h2>
+    <p class="author-name">(إعداد: أ. هلال البحري)</p>
     
     <div class="controls">
         <select id="grade" onchange="clearTable()">
@@ -331,7 +332,7 @@
             let waMsg = `السلام عليكم ولي أمر الطالب: *${name}*\n\n📊 *تقرير الأداء الأكاديمي في مادة تقنية المعلومات:*\n`;
             waMsg += `- التفاعل والحوار (${dTot}/20): ${pDiag.text}\n- الأنشطة العملية (${aTot}/40): ${pAct.text}\n`;
             waMsg += `- الاختبار القصير (${test}/20): ${pTest.text}\n- المشروع (${proj}/20): ${pProj.text}\n\n`;
-            waMsg += `📈 *النتيجة الكلية الحالية:* ${grandTot}/100\n*الخلاصة:* ${pTot.text}\n\nمع تحيات معلم المادة.`;
+            waMsg += `📈 *النتيجة الكلية الحالية:* ${grandTot}/100\n*الخلاصة:* ${pTot.text}\n\n(إعداد: أ. هلال البحري - مادة تقنية المعلومات).`;
             
             let isPhoneValid = (cleanPhone.length === 8);
             let fullPhone = isPhoneValid ? '968' + cleanPhone : '';
